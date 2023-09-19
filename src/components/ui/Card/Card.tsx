@@ -24,6 +24,9 @@ export const Info = ({children, style}: TInfo) => {
 
 export type TCard = TCardElement & {
   coverSrc?: string;
+  width?: number;
+  minWidth?: number;
+  maxWidth?: number;
   minHeight?: number;
   maxHeight?: number;
 };
@@ -32,10 +35,12 @@ export const Card = ({
   coverSrc,
   minHeight = 100,
   maxHeight,
+  minWidth,
 }: TCard) => {
   const cardStyles = {
     minHeight,
     maxHeight,
+    minWidth,
   };
   return (
     <View style={[CardStyles.card, cardStyles]}>
