@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {GestureResponderEvent, View} from 'react-native';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {UserActionsStyleSheet} from './styles';
-export const UserActions = () => {
-  const handlePressClose = (event: GestureResponderEvent) => {
+
+export interface IUserActions {
+  onReject: () => void;
+  onLike: () => void;
+}
+
+export const UserActions: FC<IUserActions> = ({onReject, onLike}) => {
+  const handlePressReject = (event: GestureResponderEvent) => {
+    onReject();
     return event;
   };
   const handlePressHeart = (event: GestureResponderEvent) => {
+    onLike();
     return event;
   };
   const handlePressWeChat = (event: GestureResponderEvent) => {
@@ -20,12 +29,12 @@ export const UserActions = () => {
           UserActionsStyleSheet.iconWrapper,
           UserActionsStyleSheet.closeWrapper,
         ]}>
-        <Icon.Button
+        <IconFA.Button
           style={UserActionsStyleSheet.closeIcon}
           iconStyle={UserActionsStyleSheet.closeIconContent}
           backgroundColor="transparent"
           name="close"
-          onPress={handlePressClose}
+          onPress={handlePressReject}
         />
       </View>
 

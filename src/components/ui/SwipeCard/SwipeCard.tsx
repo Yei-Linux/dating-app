@@ -1,18 +1,29 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useRef} from 'react';
 import {View, Animated, PanResponder, Dimensions} from 'react-native';
 import {SwipeCardStyleSheet} from './styles';
 
 type TPrevStateAct = (state: any) => any;
 export interface ISwipeCard<T> {
-  children: (item: T) => React.ReactNode;
+  children: (
+    item: T,
+    swipe: Animated.ValueXY,
+    isFirst: boolean,
+  ) => React.ReactNode;
   items: T[];
   setItems: (fun: TPrevStateAct) => void;
+  renderActionBar: (
+    handleChoice: (direction: number) => void,
+  ) => React.ReactNode;
 }
 
 const {height} = Dimensions.get('screen');
 
-export const SwipeCard = <T,>({children, items, setItems}: ISwipeCard<T>) => {
+export const SwipeCard = <T,>({
+  children,
+  items,
+  setItems,
+  renderActionBar,
+}: ISwipeCard<T>) => {
   const swipe = useRef(new Animated.ValueXY()).current;
   const titlSign = useRef(new Animated.Value(1)).current;
 
@@ -65,21 +76,33 @@ export const SwipeCard = <T,>({children, items, setItems}: ISwipeCard<T>) => {
     transform: [...swipe.getTranslateTransform(), {rotate}],
   };
 
+  const handleChoice = useCallback(
+    (direction: number) => {
+      Animated.timing(swipe.x, {
+        toValue: direction * 500,
+        duration: 400,
+        useNativeDriver: true,
+      }).start(removeTopCard);
+    },
+    [removeTopCard, swipe.x],
+  );
+
   return (
-    <View style={{flex: 1, alignItems: 'center'}}>
-      {items
-        .map((item, index) => (
-          <Animated.View
-            key={index}
-            style={[
-              index === 0 ? animatedCardStyle : {},
-              SwipeCardStyleSheet.container,
-            ]}
-            {...(index === 0 ? panResponder.panHandlers : {})}>
-            {children(item)}
-          </Animated.View>
-        ))
-        .reverse()}
+    <View>
+      <View style={SwipeCardStyleSheet.container}>
+        {items
+          .map((item, index) => (
+            <Animated.View
+              key={index}
+              style={[index === 0 ? animatedCardStyle : {}]}
+              {...(index === 0 ? panResponder.panHandlers : {})}>
+              {children(item, swipe, index === 0)}
+            </Animated.View>
+          ))
+          .reverse()}
+      </View>
+
+      {renderActionBar(handleChoice)}
     </View>
   );
 };

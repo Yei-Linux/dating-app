@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export const UserActionsStyleSheet = StyleSheet.create({
   wrapper: {
+    top: 150,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -25,7 +26,8 @@ export const UserActionsStyleSheet = StyleSheet.create({
   closeIconContent: {
     width: 30,
     fontSize: 30,
-    color: 'red',
+    color: '#F31559',
+    marginLeft: 3,
   },
   heartIcon: {
     width: 55,
@@ -41,7 +43,7 @@ export const UserActionsStyleSheet = StyleSheet.create({
   chatIconContent: {
     width: 30,
     fontSize: 30,
-    color: 'blue',
+    color: '#3085C3',
   },
   closeWrapper: {
     backgroundColor: 'white',
@@ -50,7 +52,7 @@ export const UserActionsStyleSheet = StyleSheet.create({
     backgroundColor: 'white',
   },
   heartWrapper: {
-    backgroundColor: '#BEADFA',
+    backgroundColor: '#9525ff',
     padding: 10,
   },
 });
