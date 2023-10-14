@@ -16,21 +16,16 @@ export interface ISwipeCard<T> {
   ) => React.ReactNode;
 }
 
-const {height} = Dimensions.get('screen');
-
 export const SwipeCard = <T,>({
   children,
   items,
   setItems,
   renderActionBar,
 }: ISwipeCard<T>) => {
+  const {height} = Dimensions.get('screen');
+
   const swipe = useRef(new Animated.ValueXY()).current;
   const titlSign = useRef(new Animated.Value(1)).current;
-
-  const removeTopCard = useCallback(() => {
-    setItems(prevState => prevState.slice(1));
-    swipe.setValue({x: 0, y: 0});
-  }, [swipe, setItems]);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -66,6 +61,11 @@ export const SwipeCard = <T,>({
       },
     }),
   ).current;
+
+  const removeTopCard = useCallback(() => {
+    setItems(prevState => prevState.slice(1));
+    swipe.setValue({x: 0, y: 0});
+  }, [swipe, setItems]);
 
   const rotate = Animated.multiply(swipe.x, titlSign).interpolate({
     inputRange: [-100, 0, 100],
