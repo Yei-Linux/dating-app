@@ -16,4 +16,11 @@ export const ConversationStyleSheet = StyleSheet.create({
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
   },
+  messagesWrapper: {
+    maxHeight: '90%',
+  },
+  typerWrapper: {
+    height: '10%',
+    justifyContent: 'flex-end',
+  },
 });

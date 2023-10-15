@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 const typerSlice = createSlice({
@@ -5,8 +6,9 @@ const typerSlice = createSlice({
   initialState: '',
   reducers: {
     setTyper: (state: string, action: PayloadAction<string>) => action.payload,
+    clearTyper: (state: string) => '',
   },
 });
 
-export const {setTyper} = typerSlice.actions;
+export const {setTyper, clearTyper} = typerSlice.actions;
 export default typerSlice.reducer;

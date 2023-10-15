@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {View} from 'react-native';
 import {ConversationStyleSheet} from './styles';
 import {FriendHeader} from '../FriendHeader/FriendHeader';
-import {Message} from '../Message';
+import {Messages} from '../Messages';
 import {Typer} from '../Typer';
 
 export interface IConversation {}
@@ -14,10 +14,12 @@ export const Conversation: FC<IConversation> = ({}) => {
       </View>
 
       <View style={ConversationStyleSheet.body}>
-        <View>
-          <Message text="Hello!" />
+        <View style={ConversationStyleSheet.messagesWrapper}>
+          <Messages />
         </View>
-        <Typer />
+        <View style={ConversationStyleSheet.typerWrapper}>
+          <Typer />
+        </View>
       </View>
     </View>
   );
