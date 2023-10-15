@@ -1,11 +1,15 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Discover} from './src/screens/Discover/Discover';
+import {Chat} from './src/screens/Chat/Chat';
+import {Provider} from 'react-redux';
+import {store} from './src/store/global';
 
 export const App = () => {
   return (
-    <View>
-      <Discover />
-    </View>
+    <Provider store={store}>
+      <View>
+        <Chat />
+      </View>
+    </Provider>
   );
 };
