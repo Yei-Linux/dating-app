@@ -14,6 +14,18 @@ export const FriendHeaderStyleSheet = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  onlineWrapper: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginTop: -13,
+  },
+
+  online: {
+    width: 15,
+    height: 15,
+    backgroundColor: 'green',
+    borderRadius: 30,
+  },
 
   userInfoWrapper: {
     display: 'flex',

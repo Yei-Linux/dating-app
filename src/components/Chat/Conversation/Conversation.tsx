@@ -1,26 +1,33 @@
 import React, {FC} from 'react';
 import {View} from 'react-native';
 import {ConversationStyleSheet} from './styles';
-import {FriendHeader} from '../FriendHeader/FriendHeader';
+import {Friend} from '../../shared';
 import {Messages} from '../Messages';
 import {Typer} from '../Typer';
+import {BaseLayout} from '../../../layouts';
 
 export interface IConversation {}
 export const Conversation: FC<IConversation> = ({}) => {
   return (
-    <View style={ConversationStyleSheet.wrapper}>
-      <View style={ConversationStyleSheet.header}>
-        <FriendHeader />
-      </View>
+    <BaseLayout>
+      <BaseLayout.Header>
+        <Friend>
+          <Friend.Avatar />
+          <Friend.Information>
+            <Friend.Title>Andrew Tate</Friend.Title>
+            <Friend.Description>Online</Friend.Description>
+          </Friend.Information>
+        </Friend>
+      </BaseLayout.Header>
 
-      <View style={ConversationStyleSheet.body}>
+      <BaseLayout.Body>
         <View style={ConversationStyleSheet.messagesWrapper}>
           <Messages />
         </View>
         <View style={ConversationStyleSheet.typerWrapper}>
           <Typer />
         </View>
-      </View>
-    </View>
+      </BaseLayout.Body>
+    </BaseLayout>
   );
 };

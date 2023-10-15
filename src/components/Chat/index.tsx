@@ -1,4 +1,4 @@
 export * from './Conversation';
-export * from './FriendHeader';
+export * from '../shared/Friend';
 export * from './Messages';
 export * from './Typer';

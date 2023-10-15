@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 export const MessageStyleSheet = StyleSheet.create({
   wrapper: {
     gap: 15,
-    overflow: 'scroll',
   },
   containerYours: {
     alignItems: 'flex-end',
