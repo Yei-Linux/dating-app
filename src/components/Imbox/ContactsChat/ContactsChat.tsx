@@ -12,8 +12,8 @@ export const ContactsChat = () => {
 
   return (
     <View>
-      {chatImbox.map(imbox => (
-        <PeopleInteraction {...imbox} />
+      {chatImbox.map((imbox, index) => (
+        <PeopleInteraction {...imbox} key={index} />
       ))}
     </View>
   );

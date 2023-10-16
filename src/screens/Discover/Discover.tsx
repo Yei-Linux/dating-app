@@ -4,7 +4,7 @@ import {DiscoverStyleSheet} from './styles';
 import {Title} from '../../components/ui/Title/Title';
 import {LikeOrNot} from '../../components/Discover/LikeOrNot/LikeOrNot';
 
-export const Discover = () => {
+export const DiscoverScreen = () => {
   return (
     <SafeAreaView>
       <View style={[DiscoverStyleSheet.discoverWrapper]}>

@@ -1,12 +1,12 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import {Matchs} from '../../components/Matchs';
+import {CommentsParty} from '../../components/CommentsParty';
 
-export const CommmentsParty = () => {
+export const CommmentsPartyScreen = () => {
   return (
     <SafeAreaView>
       <View>
-        <Matchs />
+        <CommentsParty />
       </View>
     </SafeAreaView>
   );

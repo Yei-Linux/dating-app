@@ -15,7 +15,7 @@ export const Button: FC<IButton> = ({
   maxWidth,
   text,
   onPress,
-  colors = ['#004d40', '#009688'],
+  colors = ['#ad56ff', '#ad56ff'],
 }) => {
   const buttonWrapper = {
     maxWidth,
