@@ -7,5 +7,6 @@ COPY ./prisma ./prisma
 COPY ./src ./src
 
 RUN npm install
-RUN npx prisma generate
+RUN npm run prisma:generate
+RUN npm run prisma:seed
 CMD npm run dev
