@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Gender {
+  id        Int      @id @default(autoincrement())
+  name      String
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Country {
+  id        Int      @id @default(autoincrement())
+  name      String
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  name        String
+  lastName    String
+  age         Int
+  description String?
+  profileImg  String?
+
+  interactionsTransmitter UserInteractions[] @relation("userTransmitter")
+  interactionsReceiver    UserInteractions[] @relation("userReceiver")
+
+  gender    Gender?  @relation(fields: [genderId], references: [id])
+  genderId  Int?
+  country   Country? @relation(fields: [countryId], references: [id])
+  countryId Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserInteractions {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userTransmitter   User? @relation("userTransmitter", fields: [userIdTransmitter], references: [id])
+  userIdTransmitter Int?
+  userReceiver      User? @relation("userReceiver", fields: [userIdReceiver], references: [id])
+  userIdReceiver    Int?
+}
