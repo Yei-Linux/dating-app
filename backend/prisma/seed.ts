@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../src/config/db/setup';
 import { gendersSeeder, countriesSeeder, usersSeeder } from '../src/config/db';
-
-const prisma = new PrismaClient();
 
 async function run() {
   await prisma.gender.createMany({

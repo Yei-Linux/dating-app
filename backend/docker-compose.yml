@@ -1,8 +1,35 @@
-version: '3.8'
+version: '3.9'
 services:
+  db:
+    image: postgres
+    container_name: postgres
+    hostname: localhost
+    ports:
+      - '5433:${DB_PORT}'
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - db
+    ports:
+      - '8080:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    restart: unless-stopped
+
   api:
     container_name: dating_api
-    restart: always
     build: .
     ports:
       - ${APP_PORT}:${APP_PORT}
@@ -10,18 +37,8 @@ services:
       - db
     volumes:
       - .:/usr/src/app
-
-  db:
-    container_name: postgres
-    image: postgres
-    ports:
-      - '5433:${DB_PORT}'
-    volumes:
-      - data:/data/db
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
-      - POSTGRES_DB=${DB_NAME}
+    restart: always
 
 volumes:
-  data: {}
+  postgres-data:
+  pgadmin-data:

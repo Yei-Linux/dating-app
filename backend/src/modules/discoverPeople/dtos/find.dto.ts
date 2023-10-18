@@ -1,12 +1,14 @@
+import { IResponse } from '../../shared';
+
 export interface IDiscoverFindRequest {
   userId: string;
 }
 
 export interface IDiscoverFind {
-  userId: string;
-  userName: string;
+  userId: number;
   age: number;
-  description: string;
-  fullName: string;
+  description?: string | null;
+  name: string;
+  lastName: string;
 }
-export type IDiscoverFindResponse = Array<IDiscoverFind>;
+export type IDiscoverFindResponse = IResponse<Array<IDiscoverFind>>;
