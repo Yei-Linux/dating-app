@@ -7,7 +7,11 @@ export const findUserToDiscoverController = async (
   res: Response<IDiscoverFindResponse>
 ) => {
   try {
-    const usersToDiscover = await findUsersToDiscover();
+    const userId = Number(req.query?.userId);
+    if (!userId) throw new Error('userId is required');
+
+    const usersToDiscover = await findUsersToDiscover(userId);
+
     const response = { data: usersToDiscover, message: 'Users to discover' };
     res.send(response);
   } catch (error) {

@@ -1,16 +1,18 @@
 import {useState, useEffect} from 'react';
-import {USERS_ON_SWIPPING} from '../constants';
 
-export const useUsersDiscover = () => {
-  const [users, setUsers] = useState(USERS_ON_SWIPPING);
+export interface IUseUserDiscover {
+  data: any[];
+}
+export const useUsersDiscover = ({data}: IUseUserDiscover) => {
+  const [users, setUsers] = useState(data);
 
   useEffect(() => {
     if (users.length > 0) {
       return;
     }
 
-    setUsers(USERS_ON_SWIPPING);
-  }, [users.length]);
+    setUsers(data);
+  }, [users.length, data]);
 
   return {users, setUsers};
 };

@@ -8,6 +8,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DiscoverScreen} from './src/screens/Discover';
 import {ImboxScreen} from './src/screens/Imbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,41 +22,45 @@ const CommentsIcon = (
   <Icon.Button color="#ad56ff" backgroundColor="transparent" name="comment" />
 );
 
+const queryClient = new QueryClient();
+
 export const App = () => {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="Discover"
-          screenOptions={{
-            header: undefined,
-          }}>
-          <Tab.Screen
-            name="Discover"
-            component={DiscoverScreen}
-            options={{
-              tabBarLabel: () => '',
-              tabBarIcon: () => DiscoverIcon,
-            }}
-          />
-          <Tab.Screen
-            name="Imbox"
-            component={ImboxScreen}
-            options={{
-              tabBarLabel: () => '',
-              tabBarIcon: () => ImboxIcon,
-            }}
-          />
-          <Tab.Screen
-            name="CommentsParty"
-            component={CommmentsPartyScreen}
-            options={{
-              tabBarLabel: () => '',
-              tabBarIcon: () => CommentsIcon,
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="Discover"
+            screenOptions={{
+              header: undefined,
+            }}>
+            <Tab.Screen
+              name="Discover"
+              component={DiscoverScreen}
+              options={{
+                tabBarLabel: () => '',
+                tabBarIcon: () => DiscoverIcon,
+              }}
+            />
+            <Tab.Screen
+              name="Imbox"
+              component={ImboxScreen}
+              options={{
+                tabBarLabel: () => '',
+                tabBarIcon: () => ImboxIcon,
+              }}
+            />
+            <Tab.Screen
+              name="CommentsParty"
+              component={CommmentsPartyScreen}
+              options={{
+                tabBarLabel: () => '',
+                tabBarIcon: () => CommentsIcon,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </QueryClientProvider>
   );
 };

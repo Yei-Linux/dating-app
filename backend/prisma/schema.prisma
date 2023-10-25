@@ -13,19 +13,30 @@ datasource db {
 }
 
 model Gender {
-  id        Int      @id @default(autoincrement())
-  name      String
-  users     User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  users        User[]
+  usersToMatch User[]   @relation("genderToMatch")
 }
 
 model Country {
   id        Int      @id @default(autoincrement())
   name      String
-  users     User[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users     User[]
+}
+
+model Interactions {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name             String
+  UserInteractions UserInteractions[]
 }
 
 model User {
@@ -40,12 +51,17 @@ model User {
   interactionsTransmitter UserInteractions[] @relation("userTransmitter")
   interactionsReceiver    UserInteractions[] @relation("userReceiver")
 
-  gender    Gender?  @relation(fields: [genderId], references: [id])
-  genderId  Int?
-  country   Country? @relation(fields: [countryId], references: [id])
-  countryId Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  genderToMatch   Gender? @relation("genderToMatch", fields: [genderToMatchId], references: [id])
+  genderToMatchId Int?
+
+  gender                       Gender?                     @relation(fields: [genderId], references: [id])
+  genderId                     Int?
+  country                      Country?                    @relation(fields: [countryId], references: [id])
+  countryId                    Int?
+  createdAt                    DateTime                    @default(now())
+  updatedAt                    DateTime                    @updatedAt
+  UserDiscoveringPeopleHistory UserDiscoverPeopleHistory[] @relation("userDiscovering")
+  UserDiscoveredPeopleHistory  UserDiscoverPeopleHistory[] @relation("userDiscovered")
 }
 
 model UserInteractions {
@@ -58,4 +74,19 @@ model UserInteractions {
   userIdTransmitter Int?
   userReceiver      User? @relation("userReceiver", fields: [userIdReceiver], references: [id])
   userIdReceiver    Int?
+
+  interaction   Interactions? @relation(fields: [interactionId], references: [id])
+  interactionId Int?
+}
+
+model UserDiscoverPeopleHistory {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userDiscovering   User? @relation("userDiscovering", fields: [userIdDiscovering], references: [id])
+  userIdDiscovering Int?
+  userDiscovered    User? @relation("userDiscovered", fields: [userIdDiscovered], references: [id])
+  userIdDiscovered  Int?
 }

@@ -11,15 +11,18 @@ import {UserActions} from '../UserActions/UserActions';
 import {useUsersDiscover} from '../../../hooks/useUsersDiscover';
 
 export interface IUser {
-  coverSrc: string;
+  profileImg: string;
   name: string;
   age: string;
   description: string;
   distance: string;
 }
 
-export const LikeOrNot = () => {
-  const {users, setUsers} = useUsersDiscover();
+export interface ILikeOrNot {
+  peopleToDiscover: any;
+}
+export const LikeOrNot = ({peopleToDiscover}: ILikeOrNot) => {
+  const {users, setUsers} = useUsersDiscover({data: peopleToDiscover});
 
   const likeOpacity = (swipe: any) =>
     swipe.x.interpolate({
@@ -71,7 +74,7 @@ export const LikeOrNot = () => {
       )}>
       {(item, swipe, isFirst) => (
         <Card
-          coverSrc={item.coverSrc}
+          profileImg={item.profileImg}
           minWidth={400}
           maxHeight={400}
           minHeight={400}>

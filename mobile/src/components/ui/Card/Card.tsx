@@ -23,7 +23,7 @@ export const Info = ({children, style}: TInfo) => {
 };
 
 export type TCard = TCardElement & {
-  coverSrc?: string;
+  profileImg?: string;
   width?: number;
   minWidth?: number;
   maxWidth?: number;
@@ -32,7 +32,7 @@ export type TCard = TCardElement & {
 };
 export const Card = ({
   children,
-  coverSrc,
+  profileImg,
   minHeight = 100,
   maxHeight,
   minWidth,
@@ -47,7 +47,7 @@ export const Card = ({
       <ImageBackground
         style={[CardStyles.cover]}
         source={{
-          uri: coverSrc,
+          uri: profileImg,
         }}
         resizeMode="cover">
         <View style={[CardStyles.coverContainer]}>{children}</View>
