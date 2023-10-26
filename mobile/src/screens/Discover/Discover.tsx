@@ -4,6 +4,7 @@ import {DiscoverStyleSheet} from './styles';
 import {Title} from '../../components/ui/Title/Title';
 import {LikeOrNot} from '../../components/Discover/LikeOrNot/LikeOrNot';
 import {useFetchDiscoverPeople} from './useFetchDiscoverPeople';
+import {UnavailableUsers} from '../../components/Discover/UnavailableUsers';
 
 export const DiscoverScreen = () => {
   const {data} = useFetchDiscoverPeople();
@@ -15,7 +16,11 @@ export const DiscoverScreen = () => {
           <Title text="Discover" level="h1" />
         </View>
 
-        {data && <LikeOrNot peopleToDiscover={data} />}
+        {data?.length ? (
+          <LikeOrNot peopleToDiscover={data} />
+        ) : (
+          <UnavailableUsers />
+        )}
       </View>
     </SafeAreaView>
   );
