@@ -7,6 +7,7 @@ import {useFetchDiscoverPeople} from './useFetchDiscoverPeople';
 
 export const DiscoverScreen = () => {
   const {data} = useFetchDiscoverPeople();
+
   return (
     <SafeAreaView>
       <View style={[DiscoverStyleSheet.discoverWrapper]}>

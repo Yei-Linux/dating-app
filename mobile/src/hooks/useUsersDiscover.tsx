@@ -1,18 +1,35 @@
 import {useState, useEffect} from 'react';
+import {IUser} from '../components/Discover/LikeOrNot/LikeOrNot';
+import {useRQCache} from './useRQCache';
+import {fetchDiscoverPeople} from '../services';
 
 export interface IUseUserDiscover {
-  data: any[];
+  peopleToDiscover: IUser[];
 }
-export const useUsersDiscover = ({data}: IUseUserDiscover) => {
-  const [users, setUsers] = useState(data);
+export const useUsersDiscover = ({peopleToDiscover}: IUseUserDiscover) => {
+  const {setToQRCache} = useRQCache();
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  const handleFetchNewPeopleWhenIsFullySwiped = async () => {
+    try {
+      const newPeople = await fetchDiscoverPeople();
+      setToQRCache(['discover_people'], () => newPeople);
+    } catch (error) {
+      setToQRCache(['discover_people'], () => []);
+    }
+  };
 
   useEffect(() => {
     if (users.length > 0) {
       return;
     }
 
-    setUsers(data);
-  }, [users.length, data]);
+    handleFetchNewPeopleWhenIsFullySwiped();
+  }, [users.length]);
+
+  useEffect(() => {
+    setUsers(peopleToDiscover);
+  }, [peopleToDiscover]);
 
   return {users, setUsers};
 };

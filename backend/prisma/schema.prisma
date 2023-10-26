@@ -79,6 +79,7 @@ model UserInteractions {
   interactionId Int?
 }
 
+//TODO: Analyze the need of this model
 model UserDiscoverPeopleHistory {
   id Int @id @default(autoincrement())
 

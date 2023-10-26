@@ -24,15 +24,21 @@ export const findUsersToDiscover = async (userId: number) => {
   );
 
   const users = await prisma.user.findMany({
-    where: { genderId: genderToMatchToDiscover },
+    where: {
+      genderId: genderToMatchToDiscover,
+      NOT: {
+        interactionsReceiver: {
+          some: { userIdTransmitter: userIsDiscovering.id },
+        },
+      },
+    },
     take: takeItemsByQuery,
     skip: randomSkip,
     include: {
-      UserDiscoveringPeopleHistory: {
-        where: { id: userIsDiscovering.id },
-      },
+      interactionsReceiver: true,
     },
   });
+
   return users.map(({ id, age, description, name, lastName, profileImg }) => ({
     id,
     age,

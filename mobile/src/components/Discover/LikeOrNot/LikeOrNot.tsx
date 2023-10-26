@@ -1,16 +1,15 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Fragment, useCallback} from 'react';
-import {Animated, View} from 'react-native';
-import {Card} from '../../ui/Card/Card';
-import {Button} from '../../ui/Button/Button';
+import {Animated} from 'react-native';
 import {SwipeCard} from '../../ui/SwipeCard/SwipeCard';
-import {DiscoverStyleSheet} from '../../../screens/Discover/styles';
 import {LikeOrNotStyleSheet} from './styles';
 import Choice from '../Choise/Choise';
 import {UserActions} from '../UserActions/UserActions';
 import {useUsersDiscover} from '../../../hooks/useUsersDiscover';
+import {SwipeCardChildren} from './SwipeCardChildren';
+import {usePostInteraction} from './usePostSwipe';
 
 export interface IUser {
+  id: number;
   profileImg: string;
   name: string;
   age: string;
@@ -19,10 +18,11 @@ export interface IUser {
 }
 
 export interface ILikeOrNot {
-  peopleToDiscover: any;
+  peopleToDiscover: IUser[];
 }
 export const LikeOrNot = ({peopleToDiscover}: ILikeOrNot) => {
-  const {users, setUsers} = useUsersDiscover({data: peopleToDiscover});
+  const {mutate} = usePostInteraction();
+  const {users, setUsers} = useUsersDiscover({peopleToDiscover});
 
   const likeOpacity = (swipe: any) =>
     swipe.x.interpolate({
@@ -62,8 +62,23 @@ export const LikeOrNot = ({peopleToDiscover}: ILikeOrNot) => {
     [],
   );
 
+  const handleSwipeUserMatching = (
+    swipe: Animated.ValueXY,
+    prevState: IUser[],
+  ) => {
+    const isLike = Number(JSON.stringify(swipe.x)) > 0;
+    const userIdReceiver = prevState?.[0]?.id;
+
+    mutate({
+      interaction: isLike ? 'like' : 'reject',
+      userIdReceiver,
+      userIdTransmitter: 1,
+    });
+  };
+
   return (
     <SwipeCard<IUser>
+      onSwipeUser={handleSwipeUserMatching}
       items={users}
       setItems={setUsers}
       renderActionBar={handleChoice => (
@@ -73,29 +88,12 @@ export const LikeOrNot = ({peopleToDiscover}: ILikeOrNot) => {
         />
       )}>
       {(item, swipe, isFirst) => (
-        <Card
-          profileImg={item.profileImg}
-          minWidth={400}
-          maxHeight={400}
-          minHeight={400}>
-          <Card.Info style={DiscoverStyleSheet.userInfo}>
-            {isFirst && renderChoice(swipe)}
-            <View>
-              <Card.Title>
-                {item.name}, {item.age}
-              </Card.Title>
-              <Card.Description>{item.description}</Card.Description>
-            </View>
-            <Button
-              maxWidth={100}
-              colors={['#000000', '#2f2f2f']}
-              text={item.distance}
-              styles={{
-                borderRadius: 30,
-              }}
-            />
-          </Card.Info>
-        </Card>
+        <SwipeCardChildren
+          item={item}
+          swipe={swipe}
+          isFirst={isFirst}
+          renderChoice={renderChoice}
+        />
       )}
     </SwipeCard>
   );

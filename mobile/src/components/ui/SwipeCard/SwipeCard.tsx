@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useRef} from 'react';
 import {View, Animated, PanResponder, Dimensions} from 'react-native';
 import {SwipeCardStyleSheet} from './styles';
@@ -14,6 +15,7 @@ export interface ISwipeCard<T> {
   renderActionBar: (
     handleChoice: (direction: number) => void,
   ) => React.ReactNode;
+  onSwipeUser: (swipe: Animated.ValueXY, prevState: T[]) => void;
 }
 
 export const SwipeCard = <T,>({
@@ -21,6 +23,7 @@ export const SwipeCard = <T,>({
   items,
   setItems,
   renderActionBar,
+  onSwipeUser,
 }: ISwipeCard<T>) => {
   const {height} = Dimensions.get('screen');
 
@@ -63,7 +66,10 @@ export const SwipeCard = <T,>({
   ).current;
 
   const removeTopCard = useCallback(() => {
-    setItems(prevState => prevState.slice(1));
+    setItems(prevState => {
+      onSwipeUser(swipe, prevState);
+      return prevState.slice(1);
+    });
     swipe.setValue({x: 0, y: 0});
   }, [swipe, setItems]);
 

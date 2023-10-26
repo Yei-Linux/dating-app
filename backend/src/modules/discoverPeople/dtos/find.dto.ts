@@ -5,7 +5,7 @@ export interface IDiscoverFindRequest {
 }
 
 export interface IDiscoverFind {
-  userId: number;
+  id: number;
   age: number;
   description?: string | null;
   name: string;
