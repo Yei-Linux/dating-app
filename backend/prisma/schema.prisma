@@ -54,14 +54,21 @@ model User {
   genderToMatch   Gender? @relation("genderToMatch", fields: [genderToMatchId], references: [id])
   genderToMatchId Int?
 
-  gender                       Gender?                     @relation(fields: [genderId], references: [id])
-  genderId                     Int?
-  country                      Country?                    @relation(fields: [countryId], references: [id])
-  countryId                    Int?
-  createdAt                    DateTime                    @default(now())
-  updatedAt                    DateTime                    @updatedAt
+  gender    Gender?  @relation(fields: [genderId], references: [id])
+  genderId  Int?
+  country   Country? @relation(fields: [countryId], references: [id])
+  countryId Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   UserDiscoveringPeopleHistory UserDiscoverPeopleHistory[] @relation("userDiscovering")
   UserDiscoveredPeopleHistory  UserDiscoverPeopleHistory[] @relation("userDiscovered")
+
+  FirstUserPrivateChat  PrivateChat[] @relation("firstUser")
+  SecondUserPrivateChat PrivateChat[] @relation("secondUser")
+
+  GroupChatUsers GroupChatUsers[]
+  Messages       Messages[]
 }
 
 model UserInteractions {
@@ -90,4 +97,85 @@ model UserDiscoverPeopleHistory {
   userIdDiscovering Int?
   userDiscovered    User? @relation("userDiscovered", fields: [userIdDiscovered], references: [id])
   userIdDiscovered  Int?
+}
+
+model ChatType {
+  id   Int    @id @default(autoincrement())
+  type String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Chat Chat[]
+}
+
+model Chat {
+  id         Int      @default(autoincrement())
+  chatType   ChatType @relation(fields: [chatTypeId], references: [id])
+  chatTypeId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  PrivateChat PrivateChat[]
+  GroupChat   GroupChat[]
+  Messages    Messages[]
+
+  @@id([id, chatTypeId])
+}
+
+model PrivateChat {
+  id           Int  @id @default(autoincrement())
+  firstUser    User @relation("firstUser", fields: [firstUserId], references: [id])
+  firstUserId  Int
+  secondUser   User @relation("secondUser", fields: [secondUserId], references: [id])
+  secondUserId Int
+
+  chatWithType   Chat @relation(fields: [chatId, chatChatTypeId], references: [id, chatTypeId])
+  chatId         Int
+  chatChatTypeId Int
+
+  @@unique([chatId, chatChatTypeId])
+}
+
+model GroupChat {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+
+  chatWithType   Chat @relation(fields: [chatId, chatChatTypeId], references: [id, chatTypeId])
+  chatId         Int
+  chatChatTypeId Int
+
+  GroupChatUsers GroupChatUsers[]
+}
+
+model GroupChatUsers {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  groupChat   GroupChat @relation(fields: [groupChatId], references: [id])
+  groupChatId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Messages {
+  id Int @id @default(autoincrement())
+
+  sender   User @relation(fields: [senderId], references: [id])
+  senderId Int
+
+  chat           Chat @relation(fields: [chatId, chatChatTypeId], references: [id, chatTypeId])
+  chatId         Int
+  chatChatTypeId Int
+
+  message String
+  checked Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
