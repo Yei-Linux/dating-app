@@ -1,38 +1,34 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import {Text, View} from 'react-native';
 import {Friend} from '../Friend';
 import {ChatImboxStyleSheet} from './styles';
-import {fromTimestampToFormatDate} from '../../../helpers';
+import {IFindImboxByUserItem} from '../../../types/imbox.type';
+import {FriendHeaderStyleSheet} from '../Friend/styles';
 
 export interface IPeopleInteractionComponent {
-  avatar: string;
-  title: string;
-  description: string;
-  timestamp: number;
-  userIcon?: React.ReactNode;
+  friend: IFindImboxByUserItem['friend'];
+  lastMessage: IFindImboxByUserItem['lastMessage'];
 }
 export const PeopleInteraction: FC<IPeopleInteractionComponent> = ({
-  avatar,
-  title,
-  description,
-  userIcon,
-  timestamp,
+  friend,
+  lastMessage,
 }) => {
-  const formatDate = useMemo(
-    () => fromTimestampToFormatDate(timestamp),
-    [timestamp],
-  );
+  const {name, lastName, profileImg} = friend;
+  const message = lastMessage?.message ?? '';
+  const formatDate = lastMessage?.createdAt;
+  const userName = `${name} ${lastName}`;
+  const userIcon = <View style={[FriendHeaderStyleSheet.online]} />;
 
   return (
     <View style={[ChatImboxStyleSheet.chatImbox]}>
       <Friend>
-        <Friend.Avatar icon={userIcon} src={avatar} />
+        <Friend.Avatar icon={userIcon} src={profileImg ?? ''} />
         <Friend.Information>
           <Friend.Title style={ChatImboxStyleSheet.chatUsername}>
-            {title}
+            {userName}
           </Friend.Title>
           <Friend.Description style={ChatImboxStyleSheet.chatDescription}>
-            {description}
+            {message}
           </Friend.Description>
         </Friend.Information>
       </Friend>

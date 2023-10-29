@@ -1,18 +1,17 @@
-import {atom, useAtom} from 'jotai';
 import React from 'react';
 import {View} from 'react-native';
-import {ContactsChatMock} from './mock';
-import {IPeopleInteractionComponent, PeopleInteraction} from '../../shared';
-
-const chatImboxAtom =
-  atom<Array<IPeopleInteractionComponent>>(ContactsChatMock);
+import {PeopleInteraction} from '../../shared';
+import {useFetchImboxByUser} from './useFetchImboxByUser';
 
 export const ContactsChat = () => {
-  const [chatImbox] = useAtom(chatImboxAtom);
+  const {data} = useFetchImboxByUser();
+  if (!data) {
+    return null;
+  }
 
   return (
     <View>
-      {chatImbox.map((imbox, index) => (
+      {data?.map((imbox, index) => (
         <PeopleInteraction {...imbox} key={index} />
       ))}
     </View>

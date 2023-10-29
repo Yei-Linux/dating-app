@@ -1,10 +1,9 @@
 import {atom, useAtom} from 'jotai';
 import React from 'react';
 import {View} from 'react-native';
-import {PeopleLikesMock} from './mock';
 import {IPeopleInteractionComponent, PeopleInteraction} from '../../shared';
 
-const peopleAtom = atom<Array<IPeopleInteractionComponent>>(PeopleLikesMock);
+const peopleAtom = atom<Array<IPeopleInteractionComponent>>([]);
 
 export const People = () => {
   const [peopleLikes] = useAtom(peopleAtom);

@@ -1,17 +1,17 @@
 import React, {FC} from 'react';
 import {ScrollView, View} from 'react-native';
 import {MessageStyleSheet} from './styles';
-import {useChatStore} from '../hooks/useChatStore';
 import {Message} from './Message';
+import {TMessage} from '../../../types/chat.type';
 
-export interface IMessages {}
-export const Messages: FC<IMessages> = ({}) => {
-  const {state} = useChatStore();
-
+export interface IMessages {
+  messages: TMessage[];
+}
+export const Messages: FC<IMessages> = ({messages}) => {
   return (
     <ScrollView>
       <View style={[MessageStyleSheet.wrapper]}>
-        {state.messages.map((message, index) => (
+        {messages.map((message, index) => (
           <Message {...message} key={index} />
         ))}
       </View>
