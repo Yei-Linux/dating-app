@@ -29,10 +29,10 @@ export const Chat: FC<IChat> = ({chat}) => {
 
       <BaseLayout.Body>
         <View style={ChatStyleSheet.messagesWrapper}>
-          <Messages messages={chat.messages} />
+          <Messages messages={chat.messages} chatId={chat.id} />
         </View>
         <View style={ChatStyleSheet.typerWrapper}>
-          <Typer />
+          <Typer chatId={chat.id} />
         </View>
       </BaseLayout.Body>
     </BaseLayout>

@@ -1,8 +1,15 @@
 import { Request, Response } from 'express';
 import { sendPrivateMessageService } from '../services/send-message.service';
 import { SOCKET_EVENTS } from '../../../config';
+import {
+  TSendMessageRequest,
+  TSendMessageResponse,
+} from '../dtos/send-message.dto';
 
-export const sendMessageController = async (req: Request, res: Response) => {
+export const sendMessageController = async (
+  req: Request<TSendMessageRequest>,
+  res: Response<TSendMessageResponse>
+) => {
   try {
     const body = req.body;
     const message = body.message;
@@ -10,9 +17,7 @@ export const sendMessageController = async (req: Request, res: Response) => {
     const chatId = Number(body.chatId);
 
     const io = req.app.get('io');
-    const sockets = req.app.get('sockets');
-    const socketId = sockets[userId];
-    const socketInstance = io.to(socketId);
+    const socketInstance = io.to(chatId);
 
     if (!body) throw new Error('Body was not passed.');
     if (!socketInstance) throw new Error('Socket Instance was not passed.');
@@ -25,9 +30,7 @@ export const sendMessageController = async (req: Request, res: Response) => {
     });
     const response = { data, message: 'Chat Messages Got' };
 
-    socketInstance.emit(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, {
-      payload: data,
-    });
+    socketInstance.emit('chat', data);
 
     res.send(response);
   } catch (error) {

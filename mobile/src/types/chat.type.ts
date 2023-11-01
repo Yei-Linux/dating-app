@@ -4,6 +4,12 @@ export type TMessage = {
   timestamp: number;
 };
 
+export type TSocketMessage = {
+  senderId: number;
+  text: string;
+  timestamp: number;
+};
+
 export type TFindChatById = {
   id: number;
   friend: {
@@ -13,4 +19,10 @@ export type TFindChatById = {
     profileImg: string | null;
   };
   messages: Array<TMessage>;
+};
+
+export type TSendMessageRequest = {
+  message: string;
+  userId: number;
+  chatId: number;
 };

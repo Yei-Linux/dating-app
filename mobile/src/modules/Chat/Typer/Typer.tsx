@@ -4,17 +4,21 @@ import {TyperStyleSheet} from './styles';
 
 import {useChatStore} from '../hooks/useChatStore';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {sendMessageService} from '../../../services';
 
-export const Typer = () => {
-  const {state, updateTyper, clearTyper, addMessage} = useChatStore();
+export interface ITyper {
+  chatId: number;
+}
+export const Typer = ({chatId}: ITyper) => {
+  const {state, updateTyper, clearTyper} = useChatStore();
 
-  const handleSendMessage = () => {
-    addMessage({
-      text: state.typer,
-      timestamp: new Date().getTime(),
-      owner: 'mine',
-    });
+  const handleSendMessage = async () => {
     clearTyper();
+    await sendMessageService({
+      chatId,
+      message: state.typer,
+      userId: 1,
+    });
   };
 
   return (

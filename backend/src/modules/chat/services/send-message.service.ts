@@ -15,11 +15,15 @@ export const sendPrivateMessageService = async ({
     data: {
       senderId,
       chatId,
-      message,
       chatChatTypeId: 1,
-      checked: false,
+      message,
+      checked: true,
     },
   });
 
-  return messageCreated;
+  return {
+    senderId: messageCreated.senderId,
+    text: messageCreated.message,
+    timestamp: new Date(messageCreated.createdAt).getTime(),
+  };
 };

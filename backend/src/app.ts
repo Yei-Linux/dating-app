@@ -13,7 +13,6 @@ const io = require('socket.io')(server, {
     origin: '*',
   },
 });
-const sockets: any = {};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,19 +23,15 @@ app.use('/imbox', ImboxRouter);
 app.use('/chat', ChatRouter);
 
 io.on('connection', (socket: any) => {
-  console.log('Client Connected: ', socket?.id);
-  socket.on('connectInit', (sessionId: string) => {
-    console.log('New User Connected: ', sessionId);
-    sockets[sessionId] = socket.id;
-    app.set('sockets', sockets);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('User Disconnected ');
+  console.log(`Connected: ${socket.id}`);
+  socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`));
+  socket.on('join', (chatId: number) => {
+    console.log(`Socket ${socket.id} joining ${chatId}`);
+    socket.join(chatId);
   });
 });
-
 app.set('io', io);
+
 server.listen(APP_PORT, () => {
   console.log('Application running up on ', APP_PORT);
 });
