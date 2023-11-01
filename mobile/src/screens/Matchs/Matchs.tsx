@@ -1,8 +1,10 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import {Matchs} from '../../components/Matchs';
+import {Matchs} from '../../modules/Matchs';
+import {TScreenProp} from '../../types';
 
-export const MatchsScreen = () => {
+export type IMatchsScreen = TScreenProp;
+export const MatchsScreen = ({}: IMatchsScreen) => {
   return (
     <SafeAreaView>
       <View>

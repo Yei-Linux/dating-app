@@ -1,13 +1,17 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {DiscoverStyleSheet} from './styles';
-import {Title} from '../../components/ui/Title/Title';
-import {LikeOrNot} from '../../components/Discover/LikeOrNot/LikeOrNot';
-import {useFetchDiscoverPeople} from './useFetchDiscoverPeople';
-import {UnavailableUsers} from '../../components/Discover/UnavailableUsers';
 
-export const DiscoverScreen = () => {
-  const {data} = useFetchDiscoverPeople();
+import {Title} from '../../modules/ui/Title/Title';
+import {Discover} from '../../modules/Discover';
+import {UnavailableUsers} from '../../modules/Discover/UnavailableUsers';
+
+import {TScreenProp} from '../../types';
+import {useFindPeopleQuery} from '../../rtk-query';
+
+export type IDiscoverScreen = TScreenProp;
+export const DiscoverScreen = ({}: IDiscoverScreen) => {
+  const {data: peopleToDiscover, refetch} = useFindPeopleQuery({userId: '1'});
 
   return (
     <SafeAreaView>
@@ -16,8 +20,8 @@ export const DiscoverScreen = () => {
           <Title text="Discover" level="h1" />
         </View>
 
-        {data?.length ? (
-          <LikeOrNot peopleToDiscover={data} />
+        {peopleToDiscover?.length ? (
+          <Discover peopleToDiscover={peopleToDiscover} refetch={refetch} />
         ) : (
           <UnavailableUsers />
         )}

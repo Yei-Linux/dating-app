@@ -1,4 +1,4 @@
-import {IUser} from '../../components/Discover/LikeOrNot/LikeOrNot';
+import {IUser} from '../../modules/Discover/LikeOrNot/LikeOrNot';
 import {axiosClient} from '../../config';
 
 export const fetchDiscoverPeople = async (): Promise<IUser[]> => {

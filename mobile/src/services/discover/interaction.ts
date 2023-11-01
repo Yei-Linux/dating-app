@@ -1,5 +1,5 @@
 import {axiosClient} from '../../config';
-import {IDiscoverInteractionRequest} from '../../types/interaction.type';
+import {IDiscoverInteractionRequest} from '../../types/discover';
 
 export const interactionPeople = async (
   request: IDiscoverInteractionRequest,

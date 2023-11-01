@@ -1,5 +1,4 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {messagesDefaultState} from '../states/messages.state';
 
 export interface IMessage {
   text: string;
@@ -9,7 +8,7 @@ export interface IMessage {
 
 const messagesSlice = createSlice({
   name: 'messages',
-  initialState: messagesDefaultState,
+  initialState: [] as Array<IMessage>,
   reducers: {
     addMessage: (state, action: PayloadAction<IMessage>) => {
       if (!action.payload) {

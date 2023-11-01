@@ -18,7 +18,7 @@ export const findChatByIdService = async ({
       ),
     );
     const {data} = await axiosClient.get(`/chat/private?${params.toString()}`);
-    return data;
+    return data?.data;
   } catch (error) {
     throw new Error(`Error getting private chat ${(error as Error).message}`);
   }

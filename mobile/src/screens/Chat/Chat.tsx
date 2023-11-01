@@ -1,13 +1,17 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import {Conversation} from '../../components/Chat';
+import {Chat} from '../../modules/Chat';
+import {TScreenProp} from '../../types';
+import {useFindChatByIdQuery} from '../../rtk-query';
 
-export const ChatScreen = () => {
+export type IChatScreen = TScreenProp;
+export const ChatScreen = ({route}: IChatScreen) => {
+  const chatId = route.params?.chatId;
+  const {data: chat} = useFindChatByIdQuery({userId: '1', chatId});
+
   return (
     <SafeAreaView>
-      <View>
-        <Conversation />
-      </View>
+      <View>{chat && <Chat chat={chat} />}</View>
     </SafeAreaView>
   );
 };

@@ -1,5 +1,5 @@
 export const GESTURE_COMPLETED = 5;
-
+export const BASE_URL = 'http://10.0.2.2';
 export const USERS_ON_SWIPPING = [
   {
     profileImg:

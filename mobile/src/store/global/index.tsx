@@ -1,6 +1,9 @@
-import {configureStore} from '@reduxjs/toolkit';
-import imboxReducer from './slices/imbox.slice';
+import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
+import {datingMatchApi} from '../../rtk-query';
 
 export const store = configureStore({
-  reducer: {chat: imboxReducer},
+  reducer: {
+    [datingMatchApi.reducerPath]: datingMatchApi.reducer,
+  },
+  middleware: () => getDefaultMiddleware().concat(datingMatchApi.middleware),
 });
