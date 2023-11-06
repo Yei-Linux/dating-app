@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ChatScreen} from './src/screens/Chat';
 import {Home} from './src/screens/Home';
+import {Profile} from './src/screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen name="Chat" component={ChatScreen} />
+          <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

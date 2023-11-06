@@ -9,6 +9,7 @@ export interface IButton {
   text: string;
   colors?: (string | number)[];
   onPress?: (event: GestureResponderEvent) => void;
+  isDisable?: boolean;
 }
 export const Button: FC<IButton> = ({
   styles,
@@ -16,6 +17,7 @@ export const Button: FC<IButton> = ({
   text,
   onPress,
   colors = ['#ad56ff', '#ad56ff'],
+  isDisable = false,
 }) => {
   const buttonWrapper = {
     maxWidth,
@@ -23,7 +25,7 @@ export const Button: FC<IButton> = ({
   };
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={isDisable}>
       <LinearGradient
         colors={colors}
         style={[ButtonStyleSheet.wrapper, buttonWrapper]}>

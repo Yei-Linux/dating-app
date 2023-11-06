@@ -1,12 +1,13 @@
 import React from 'react';
 import {FriendHeaderStyleSheet} from './styles';
-import {View, Image, Text} from 'react-native';
+import {View, Text} from 'react-native';
+import {Avatar} from '../Avatar';
 
 export interface ITitle {
   children: React.ReactNode;
   style?: Record<string, any>;
 }
-export const Title = ({children, style}: ITitle) => (
+const Title = ({children, style}: ITitle) => (
   <Text style={[FriendHeaderStyleSheet.userName, style]}>{children}</Text>
 );
 
@@ -17,23 +18,6 @@ export const Description = ({children, style}: ITitle) => (
 export const Information = ({children, style}: ITitle) => (
   <View style={[FriendHeaderStyleSheet.userInfoWrapper, style]}>
     {children}
-  </View>
-);
-
-export interface IAvatar {
-  src?: string;
-  isOnline?: boolean;
-  icon?: React.ReactNode;
-}
-export const Avatar = ({icon, src}: IAvatar) => (
-  <View style={FriendHeaderStyleSheet.avatarWrapper}>
-    <Image
-      style={FriendHeaderStyleSheet.avatar}
-      source={{
-        uri: src,
-      }}
-    />
-    {icon && <View style={FriendHeaderStyleSheet.onlineWrapper}>{icon}</View>}
   </View>
 );
 

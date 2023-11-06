@@ -13,6 +13,7 @@ export const MessageStyleSheet = StyleSheet.create({
     maxWidth: '80%',
     width: 'auto',
     position: 'relative',
+    minWidth: 100,
   },
   text: {
     margin: 3,
