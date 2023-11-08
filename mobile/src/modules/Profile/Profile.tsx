@@ -1,77 +1,87 @@
-import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {View, TextInput, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text} from 'react-native';
 import {ProfileStyleSheet} from './styles';
 import {Button} from '../ui/Button/Button';
+import {useForm} from 'react-hook-form';
+import {InputController} from './InputController';
+import {useUpdateProfileMutation} from '../../rtk-query';
+import {TFindByUserIdResponse} from '../../types/profile.type';
 
-export const ProfileForm = () => {
+export type TFormFlagger = Record<string, boolean>;
+
+export interface IProfileForm {
+  values: TFindByUserIdResponse;
+}
+export const ProfileForm = ({values: {id, ...defaultValues}}: IProfileForm) => {
+  const [mutate] = useUpdateProfileMutation({
+    fixedCacheKey: 'updateProfile',
+  });
+  const [formFlagger, setFormFlagger] = useState<TFormFlagger>({});
+  const {
+    control,
+    handleSubmit,
+    formState: {isValid},
+  } = useForm({mode: 'onBlur', defaultValues});
+
+  const onSubmit = async (data: any) => {
+    if (!isValid) {
+      return;
+    }
+
+    await mutate({body: data, params: {userId: id}});
+  };
+
+  const handleAddFormFlagger = (key: string, value: boolean) =>
+    setFormFlagger(prev => ({...prev, [key]: value}));
+
   return (
     <View style={ProfileStyleSheet.container}>
       <View style={ProfileStyleSheet.formItem}>
         <Text style={ProfileStyleSheet.label}>Name:</Text>
-        <View style={ProfileStyleSheet.inputContainer}>
-          <TextInput style={ProfileStyleSheet.input} editable={false}>
-            Batman Winston
-          </TextInput>
-          <View style={ProfileStyleSheet.edit}>
-            <Icon.Button
-              color="#ad56ff"
-              backgroundColor="transparent"
-              name="edit"
-            />
-          </View>
-        </View>
+        <InputController
+          control={control}
+          formFlagger={formFlagger}
+          handleAddFormFlagger={handleAddFormFlagger}
+          name="name"
+        />
+      </View>
+
+      <View style={ProfileStyleSheet.formItem}>
+        <Text style={ProfileStyleSheet.label}>Last Name:</Text>
+        <InputController
+          control={control}
+          formFlagger={formFlagger}
+          handleAddFormFlagger={handleAddFormFlagger}
+          name="lastName"
+        />
       </View>
 
       <View style={ProfileStyleSheet.formItem}>
         <Text style={ProfileStyleSheet.label}>Email:</Text>
-        <View style={ProfileStyleSheet.inputContainer}>
-          <TextInput style={ProfileStyleSheet.input} editable={false}>
-            batman67@gmail.com
-          </TextInput>
-          <View style={ProfileStyleSheet.edit}>
-            <Icon.Button
-              color="#ad56ff"
-              backgroundColor="transparent"
-              name="edit"
-            />
-          </View>
-        </View>
-      </View>
-
-      <View style={ProfileStyleSheet.formItem}>
-        <Text style={ProfileStyleSheet.label}>Username:</Text>
-        <View style={ProfileStyleSheet.inputContainer}>
-          <TextInput style={ProfileStyleSheet.input} editable={false}>
-            bati
-          </TextInput>
-          <View style={ProfileStyleSheet.edit}>
-            <Icon.Button
-              color="#ad56ff"
-              backgroundColor="transparent"
-              name="edit"
-            />
-          </View>
-        </View>
+        <InputController
+          control={control}
+          formFlagger={formFlagger}
+          handleAddFormFlagger={handleAddFormFlagger}
+          name="email"
+        />
       </View>
 
       <View style={ProfileStyleSheet.formItem}>
         <Text style={ProfileStyleSheet.label}>Age:</Text>
-        <View style={ProfileStyleSheet.inputContainer}>
-          <TextInput style={ProfileStyleSheet.input} editable={false}>
-            56
-          </TextInput>
-          <View style={ProfileStyleSheet.edit}>
-            <Icon.Button
-              color="#ad56ff"
-              backgroundColor="transparent"
-              name="edit"
-            />
-          </View>
-        </View>
+        <InputController
+          control={control}
+          formFlagger={formFlagger}
+          handleAddFormFlagger={handleAddFormFlagger}
+          name="age"
+        />
       </View>
 
-      <Button styles={ProfileStyleSheet.submit} text="Edit" isDisable />
+      <Button
+        styles={ProfileStyleSheet.submit}
+        text="Edit"
+        isDisable={!isValid}
+        onPress={handleSubmit(onSubmit)}
+      />
     </View>
   );
 };

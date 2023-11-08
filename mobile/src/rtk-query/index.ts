@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {chatApi} from './chat';
 import {discoverApi} from './discover';
 import {imboxApi} from './imbox';
+import {profileApi} from './profile';
 
 export const datingMatchApi = createApi({
   reducerPath: 'datingMatchApi',
@@ -10,6 +11,7 @@ export const datingMatchApi = createApi({
     ...chatApi(builder),
     ...discoverApi(builder),
     ...imboxApi(builder),
+    ...profileApi(builder),
   }),
 });
 
@@ -18,4 +20,6 @@ export const {
   useFindPeopleQuery,
   useInteractWithPeopleMutation,
   useFindImboxByUserQuery,
+  useFindProfileByUserIdQuery,
+  useUpdateProfileMutation,
 } = datingMatchApi;

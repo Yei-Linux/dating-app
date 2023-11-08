@@ -6,19 +6,28 @@ import {Avatar} from '../../modules/shared';
 import {Title} from '../../modules/ui/Title/Title';
 import {ProfileStyleSheet} from './styles';
 import {ProfileForm} from '../../modules/Profile/Profile';
+import {useFindProfileByUserIdQuery} from '../../rtk-query';
 
 export type IProfileScreen = TScreenProp;
 export const Profile = ({}: IProfileScreen) => {
+  const {data} = useFindProfileByUserIdQuery({userId: 1});
+
+  if (!data) {
+    return null;
+  }
+
+  const fullName = `${data.name} ${data.lastName}`;
+
   return (
     <View style={ProfileStyleSheet.container}>
       <View style={ProfileStyleSheet.avatarContainer}>
-        <Avatar src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png" />
-        <Title text="Batman Winston" level="h3" />
-        <Text>18 years old</Text>
+        <Avatar src={data.profileImg ?? ''} />
+        <Title text={fullName} level="h3" />
+        <Text>{data.age} years old</Text>
       </View>
 
       <View style={ProfileStyleSheet.menuContainer}>
-        <ProfileForm />
+        <ProfileForm values={data} />
 
         <TouchableOpacity>
           <View style={ProfileStyleSheet.menuItemContainer}>

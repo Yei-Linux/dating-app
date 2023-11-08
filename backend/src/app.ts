@@ -5,6 +5,7 @@ import { DiscoverRouter } from './modules/discoverPeople/router';
 import { APP_PORT } from './config';
 import { ImboxRouter } from './modules/imbox/router';
 import { ChatRouter } from './modules/chat/router';
+import { ProfileRouter } from './modules/profile/router';
 
 const app = express();
 const server = http.createServer(app);
@@ -21,6 +22,7 @@ app.use(cors());
 app.use('/discover', DiscoverRouter);
 app.use('/imbox', ImboxRouter);
 app.use('/chat', ChatRouter);
+app.use('/profile', ProfileRouter);
 
 io.on('connection', (socket: any) => {
   console.log(`Connected: ${socket.id}`);
