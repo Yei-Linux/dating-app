@@ -4,8 +4,9 @@ import {ProfileStyleSheet} from './styles';
 import {Button} from '../ui/Button/Button';
 import {useForm} from 'react-hook-form';
 import {InputController} from './InputController';
-import {useUpdateProfileMutation} from '../../rtk-query';
+import {datingMatchApi, useUpdateProfileMutation} from '../../rtk-query';
 import {TFindByUserIdResponse} from '../../types/profile.type';
+import {useAppDispatch} from '../../store/global';
 
 export type TFormFlagger = Record<string, boolean>;
 
@@ -16,6 +17,8 @@ export const ProfileForm = ({values: {id, ...defaultValues}}: IProfileForm) => {
   const [mutate] = useUpdateProfileMutation({
     fixedCacheKey: 'updateProfile',
   });
+  const dispatch = useAppDispatch();
+
   const [formFlagger, setFormFlagger] = useState<TFormFlagger>({});
   const {
     control,
@@ -27,8 +30,31 @@ export const ProfileForm = ({values: {id, ...defaultValues}}: IProfileForm) => {
     if (!isValid) {
       return;
     }
+    const body = {
+      ...data,
+      age: Number(data.age),
+    };
 
-    await mutate({body: data, params: {userId: id}});
+    try {
+      const response: any = await mutate({
+        body,
+        params: {userId: id},
+      });
+      if (!response.data) {
+        return;
+      }
+
+      dispatch(
+        datingMatchApi.util.updateQueryData(
+          'findProfileByUserId',
+          {userId: id},
+          draft => {
+            Object.assign(draft, response.data);
+          },
+        ),
+      );
+      setFormFlagger({});
+    } catch (error) {}
   };
 
   const handleAddFormFlagger = (key: string, value: boolean) =>

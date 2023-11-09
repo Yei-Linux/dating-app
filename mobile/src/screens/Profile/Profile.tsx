@@ -11,7 +11,6 @@ import {useFindProfileByUserIdQuery} from '../../rtk-query';
 export type IProfileScreen = TScreenProp;
 export const Profile = ({}: IProfileScreen) => {
   const {data} = useFindProfileByUserIdQuery({userId: 1});
-
   if (!data) {
     return null;
   }

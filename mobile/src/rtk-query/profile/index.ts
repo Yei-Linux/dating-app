@@ -47,7 +47,9 @@ export const profileApi = (
       body,
       params,
     }),
-    transformResponse: (response: TResponse<TUpdateByUserIdResponse>) =>
-      response.data,
+    transformResponse: (response: TResponse<TUpdateByUserIdResponse>) => {
+      console.log('error: ', response.message);
+      return response.data;
+    },
   }),
 });
