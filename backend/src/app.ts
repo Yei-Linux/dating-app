@@ -6,6 +6,8 @@ import { APP_PORT } from './config';
 import { ImboxRouter } from './modules/imbox/router';
 import { ChatRouter } from './modules/chat/router';
 import { ProfileRouter } from './modules/profile/router';
+import { AuthRouter } from './modules/auth/router';
+import { authMiddleware } from './modules/shared/middlewares';
 
 const app = express();
 const server = http.createServer(app);
@@ -19,10 +21,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use(authMiddleware);
+
 app.use('/discover', DiscoverRouter);
 app.use('/imbox', ImboxRouter);
 app.use('/chat', ChatRouter);
 app.use('/profile', ProfileRouter);
+app.use('/auth', AuthRouter);
 
 io.on('connection', (socket: any) => {
   console.log(`Connected: ${socket.id}`);

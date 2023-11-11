@@ -1,3 +1,5 @@
+const PASSWORD = '123';
+
 export const usersSeeder = [
   {
     id: 1,
@@ -11,6 +13,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 2,
     genderToMatchId: 1,
+    password: PASSWORD,
   },
   {
     id: 2,
@@ -24,6 +27,7 @@ export const usersSeeder = [
     countryId: 2,
     genderId: 2,
     genderToMatchId: 1,
+    password: PASSWORD,
   },
   {
     id: 3,
@@ -37,6 +41,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 2,
     genderToMatchId: 1,
+    password: PASSWORD,
   },
   {
     id: 4,
@@ -50,6 +55,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 1,
     genderToMatchId: 2,
+    password: PASSWORD,
   },
   {
     id: 5,
@@ -63,6 +69,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 1,
     genderToMatchId: 2,
+    password: PASSWORD,
   },
   {
     id: 6,
@@ -76,5 +83,6 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 1,
     genderToMatchId: 2,
+    password: PASSWORD,
   },
 ];

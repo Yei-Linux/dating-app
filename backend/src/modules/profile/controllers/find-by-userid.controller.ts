@@ -7,8 +7,12 @@ export const findByUserIdController = async (
   res: Response<TFindByUserIdResponse>
 ) => {
   try {
-    const userId = Number(req.query?.userId);
-    if (!userId) throw new Error('userId is required');
+    const payload = req.headers?.['user'] as string;
+    const userId = JSON.parse(payload)?.id;
+
+    if (!userId) {
+      throw new Error('Token is not signed correctly');
+    }
 
     const data = await findByUserIdService({ userId });
     const response = { data, message: 'User found' };
@@ -16,6 +20,6 @@ export const findByUserIdController = async (
   } catch (error) {
     const message = (error as Error).message;
     const response = { data: null, message };
-    res.send(response);
+    res.status(500).send(response);
   }
 };

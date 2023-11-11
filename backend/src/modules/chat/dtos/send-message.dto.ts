@@ -3,7 +3,6 @@ import { IResponse } from '../../shared';
 export type TSendMessageRequest = {
   message: string;
   chatId: number;
-  userId: number;
 };
 
 export type TSocketMessage = {

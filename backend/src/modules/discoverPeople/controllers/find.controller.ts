@@ -7,8 +7,12 @@ export const findUserToDiscoverController = async (
   res: Response<IDiscoverFindResponse>
 ) => {
   try {
-    const userId = Number(req.query?.userId);
-    if (!userId) throw new Error('userId is required');
+    const payload = req.headers?.['user'] as string;
+    const userId = JSON.parse(payload)?.id;
+
+    if (!userId) {
+      throw new Error('Token is not signed correctly');
+    }
 
     const usersToDiscover = await findUsersToDiscover(userId);
 
@@ -17,6 +21,6 @@ export const findUserToDiscoverController = async (
   } catch (error) {
     const message = (error as Error).message;
     const response = { data: [], message: 'There is an error ' + message };
-    res.send(response);
+    res.status(500).send(response);
   }
 };

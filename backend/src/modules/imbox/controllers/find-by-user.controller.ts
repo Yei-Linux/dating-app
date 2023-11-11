@@ -7,7 +7,12 @@ export const findImboxByUser = async (
   res: Response<IFindImboxByUserResponse>
 ) => {
   try {
-    const userId = Number(req.query.userId);
+    const payload = req.headers?.['user'] as string;
+    const userId = JSON.parse(payload)?.id;
+
+    if (!userId) {
+      throw new Error('Token is not signed correctly');
+    }
 
     const data = await findImboxByUserService({ userId });
     const response = { data, message: 'Imbox got' };
@@ -15,6 +20,6 @@ export const findImboxByUser = async (
   } catch (error) {
     const message = (error as Error).message;
     const response = { data: [], message: 'There is an error ' + message };
-    res.send(response);
+    res.status(500).send(response);
   }
 };

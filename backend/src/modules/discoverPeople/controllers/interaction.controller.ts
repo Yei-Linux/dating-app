@@ -10,11 +10,18 @@ export const interactionController = async (
   res: Response<IDiscoverInteractionResponse>
 ) => {
   try {
+    const payload = req.headers?.['user'] as string;
+    const userIdTransmitter = JSON.parse(payload)?.id;
+
+    if (!userIdTransmitter) {
+      throw new Error('Token is not signed correctly');
+    }
+
     const reqBody = req.body as IDiscoverInteractionRequest | null;
     if (!reqBody) throw new Error('Body is required');
 
     const usersToDiscover = await interactionUserWithPeople({
-      userIdTransmitter: reqBody.userIdTransmitter,
+      userIdTransmitter: userIdTransmitter,
       userIdReceiver: reqBody.userIdReceiver,
       interaction: reqBody.interaction === 'like' ? 1 : 2,
     });
@@ -29,6 +36,6 @@ export const interactionController = async (
       data: { id: 0 },
       message: 'There is an error ' + message,
     };
-    res.send(response);
+    res.status(500).send(response);
   }
 };

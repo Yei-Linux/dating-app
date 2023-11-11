@@ -7,9 +7,13 @@ export const updateByUserIdController = async (
   res: Response<TUpdateByUserIdResponse>
 ) => {
   try {
-    const userId = Number(req.query.userId);
     const body = req.body;
-    if (!userId) throw new Error('userId is required');
+    const payload = req.headers?.['user'] as string;
+    const userId = JSON.parse(payload)?.id;
+
+    if (!userId) {
+      throw new Error('Token is not signed correctly');
+    }
 
     const data = await updateByUserIdService({ userId, ...body });
     const response = { data, message: 'User updated' };
@@ -17,6 +21,6 @@ export const updateByUserIdController = async (
   } catch (error) {
     const message = (error as Error).message;
     const response = { data: null, message };
-    res.send(response);
+    res.status(500).send(response);
   }
 };

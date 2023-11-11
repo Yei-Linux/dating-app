@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { sendPrivateMessageService } from '../services/send-message.service';
-import { SOCKET_EVENTS } from '../../../config';
 import {
   TSendMessageRequest,
   TSendMessageResponse,
@@ -11,9 +10,15 @@ export const sendMessageController = async (
   res: Response<TSendMessageResponse>
 ) => {
   try {
+    const payload = req.headers?.['user'] as string;
+    const senderId = JSON.parse(payload)?.id;
+
+    if (!senderId) {
+      throw new Error('Token is not signed correctly');
+    }
+
     const body = req.body;
     const message = body.message;
-    const userId = Number(body.userId);
     const chatId = Number(body.chatId);
 
     const io = req.app.get('io');
@@ -21,10 +26,9 @@ export const sendMessageController = async (
 
     if (!body) throw new Error('Body was not passed.');
     if (!socketInstance) throw new Error('Socket Instance was not passed.');
-    if (!userId) throw new Error('UserId Header was not passed.');
 
     const data = await sendPrivateMessageService({
-      senderId: userId,
+      senderId,
       message,
       chatId,
     });
@@ -39,6 +43,6 @@ export const sendMessageController = async (
       data: {} as any,
       message: 'There is an error ' + message,
     };
-    res.send(response);
+    res.status(500).send(response);
   }
 };

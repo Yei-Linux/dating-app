@@ -7,8 +7,14 @@ export const findPrivateChatById = async (
   res: Response<TFindChatByIdResponse>
 ) => {
   try {
+    const payload = req.headers?.['user'] as string;
+    const userId = JSON.parse(payload)?.id;
+
+    if (!userId) {
+      throw new Error('Token is not signed correctly');
+    }
+
     const chatId = Number(req.query.chatId);
-    const userId = Number(req.query.userId);
     const data = await findPrivateChatByIdService(chatId, userId);
     const response = { data, message: 'Chat Messages Got' };
 
@@ -19,6 +25,6 @@ export const findPrivateChatById = async (
       data: {} as any,
       message: 'There is an error ' + message,
     };
-    res.send(response);
+    res.status(500).send(response);
   }
 };
