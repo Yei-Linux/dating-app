@@ -15,6 +15,14 @@ export const findPrivateChatByIdService = async (
     },
   });
   if (!privateChatResultSet) throw new Error('Private chat was not found');
+
+  const isPartOfChat =
+    privateChatResultSet.firstUserId === userId ||
+    privateChatResultSet.secondUserId === userId;
+  if (!isPartOfChat) {
+    throw new Error('Sorry but you are not part of this chat');
+  }
+
   const userFriend =
     privateChatResultSet.firstUserId === userId
       ? privateChatResultSet.secondUser

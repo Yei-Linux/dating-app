@@ -6,6 +6,10 @@ export type TUpdateByUserIdRequest = {
   lastName: string;
   age: number;
   profileImg?: string | null;
+  genderId: number;
+  genderToMatchId: number;
+  countryId: number;
+  description?: string;
 };
 
 export type TUpdateByUserIdResponse = IResponse<{

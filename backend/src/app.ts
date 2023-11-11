@@ -8,6 +8,8 @@ import { ChatRouter } from './modules/chat/router';
 import { ProfileRouter } from './modules/profile/router';
 import { AuthRouter } from './modules/auth/router';
 import { authMiddleware } from './modules/shared/middlewares';
+import { GenderRouter } from './modules/gender/router';
+import { CountryRouter } from './modules/country/router';
 
 const app = express();
 const server = http.createServer(app);
@@ -27,6 +29,8 @@ app.use('/discover', DiscoverRouter);
 app.use('/imbox', ImboxRouter);
 app.use('/chat', ChatRouter);
 app.use('/profile', ProfileRouter);
+app.use('/countries', CountryRouter);
+app.use('/genders', GenderRouter);
 app.use('/auth', AuthRouter);
 
 io.on('connection', (socket: any) => {

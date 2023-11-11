@@ -11,7 +11,9 @@ export const authMiddleware = async (
   next: () => void
 ) => {
   const isAuthPath = req.path.includes('/auth');
-  if (isAuthPath) {
+  const isGenderPath = req.path.includes('/genders');
+  const isCountryPath = req.path.includes('/countries');
+  if (isAuthPath || isGenderPath || isCountryPath) {
     next();
     return;
   }

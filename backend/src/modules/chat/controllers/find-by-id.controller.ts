@@ -23,7 +23,7 @@ export const findPrivateChatById = async (
     const message = (error as Error).message;
     const response = {
       data: {} as any,
-      message: 'There is an error ' + message,
+      message: message,
     };
     res.status(500).send(response);
   }

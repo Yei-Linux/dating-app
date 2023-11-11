@@ -9,7 +9,14 @@ export type TSignupService = {
 export const signUpService = async (request: TSignupService) => {
   const passwordHashed = hashHelper(request.password).hash(JWT_VARIABLES.SALT);
   const userCreated = await prisma.user.create({
-    data: { ...request, age: Number(request.age), password: passwordHashed },
+    data: {
+      ...request,
+      age: Number(request.age),
+      genderId: Number(request.genderId),
+      genderToMatchId: Number(request.genderToMatchId),
+      countryId: Number(request.countryId),
+      password: passwordHashed,
+    },
   });
 
   return {

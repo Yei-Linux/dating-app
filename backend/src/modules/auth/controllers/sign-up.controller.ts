@@ -8,7 +8,7 @@ export const signUpController = async (
   res: Response<TSignupResponse>
 ) => {
   try {
-    const body = req.body;
+    const body = req.body as TSignupRequest;
     if (!body) {
       throw new Error('Body is required');
     }
