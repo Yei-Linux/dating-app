@@ -11,3 +11,13 @@ export type TScreenProp = {
   navigation: ScreenNavigationProp;
   route: ScreenRouteProp;
 };
+
+export interface IAction<T = any> {
+  payload: T;
+  type: string;
+}
+
+export type TItem = {
+  id: number;
+  name: string;
+};

@@ -16,6 +16,7 @@ export const SigninController = async (
       name: user.name,
       lastName: user.lastName,
       profileImg: user.profileImg ?? '',
+      description: user.description ?? '',
     };
     const token = await generateTokenService({ payload });
 

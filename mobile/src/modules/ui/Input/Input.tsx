@@ -8,6 +8,7 @@ import {InputStyleSheet} from './styles';
 import {FC} from 'react';
 
 export interface IInput {
+  editable?: boolean;
   value?: string;
   textContentType?: 'emailAddress' | 'password';
   placeholder?: string;
@@ -15,6 +16,7 @@ export interface IInput {
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 export const Input: FC<IInput> = ({
+  editable,
   placeholder,
   value,
   onChangeText,
@@ -24,6 +26,7 @@ export const Input: FC<IInput> = ({
   return (
     <TextInput
       style={InputStyleSheet.input}
+      editable={editable}
       value={`${value}`}
       onChangeText={onChangeText}
       onBlur={onBlur}

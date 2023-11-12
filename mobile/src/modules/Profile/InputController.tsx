@@ -1,9 +1,10 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {View, TextInput} from 'react-native';
+import {View} from 'react-native';
 import {ProfileStyleSheet} from './styles';
 import {Control, Controller} from 'react-hook-form';
 import {TFormFlagger} from './Profile';
+import {Input} from '../ui/Input';
 
 export interface IInputController {
   formFlagger: TFormFlagger;
@@ -33,8 +34,7 @@ export const InputController = ({
         control={control}
         name={name}
         render={({field: {onChange, value, onBlur}}) => (
-          <TextInput
-            style={ProfileStyleSheet.input}
+          <Input
             editable={formFlagger?.[name] ?? false}
             value={`${value}`}
             onChangeText={text => onChange(text)}
