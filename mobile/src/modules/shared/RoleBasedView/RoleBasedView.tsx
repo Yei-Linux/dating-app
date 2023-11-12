@@ -11,19 +11,19 @@ export interface IRoleBasedView {
 
 export const RoleBasedView = function ({component, guards}: IRoleBasedView) {
   const navigation = useNavigation();
-  const [rba, setRba] = useState(false);
+  const [canAccessScreen, setCanAccessScreen] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
     applyGuards(guards, navigation)
       .then(value => {
         if (isMounted) {
-          setRba(value);
+          setCanAccessScreen(value);
         }
       })
       .catch(_ => {
         if (isMounted) {
-          setRba(false);
+          setCanAccessScreen(false);
           if (navigation.canGoBack()) {
             navigation.goBack();
           }
@@ -34,5 +34,5 @@ export const RoleBasedView = function ({component, guards}: IRoleBasedView) {
     };
   }, []);
 
-  return <>{rba === false ? <Loading /> : component({navigation})}</>;
+  return <>{!canAccessScreen ? <Loading /> : component({navigation})}</>;
 };

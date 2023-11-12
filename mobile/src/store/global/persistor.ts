@@ -5,6 +5,5 @@ import {rootReducers} from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: [],
 };
 export const persistedReducer = persistReducer(persistConfig, rootReducers);
