@@ -2,11 +2,14 @@ import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {HeaderStylesheet} from './styles';
 import {Avatar} from '../../modules/shared';
+import {useAppSelector} from '../../store/global';
 
 export interface IHeader {
   gotoProfile: () => void;
 }
 export const Header = ({gotoProfile}: IHeader) => {
+  const auth: any = useAppSelector(state => state.auth);
+  const profileImg = auth?.user?.profileImg;
   return (
     <View style={HeaderStylesheet.container}>
       <View>
@@ -14,7 +17,7 @@ export const Header = ({gotoProfile}: IHeader) => {
       </View>
       <View>
         <TouchableOpacity onPress={gotoProfile}>
-          <Avatar src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png" />
+          <Avatar src={profileImg} />
         </TouchableOpacity>
       </View>
     </View>

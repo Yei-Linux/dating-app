@@ -1,4 +1,3 @@
-import {jwtDecode} from 'jwt-decode';
 import {
   BaseQueryFn,
   FetchArgs,
@@ -8,7 +7,6 @@ import {
 import {EndpointBuilder} from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import {TResponse} from '../../types';
 import {
-  TPayloadToken,
   TSignInRequest,
   TSignInResponse,
   TSignUpResponse,
@@ -33,18 +31,7 @@ export const authApi = (
       method: 'POST',
       body,
     }),
-    transformResponse: (response: TResponse<TSignInResponse>) => {
-      const payload: TPayloadToken = jwtDecode(response.data.token);
-      return {
-        id: payload.id,
-        email: payload.email,
-        name: payload.name,
-        lastName: payload.lastName,
-        profileImg: payload.profileImg,
-        description: payload.description,
-        token: response.data.token,
-      };
-    },
+    transformResponse: (response: TResponse<TSignInResponse>) => response.data,
   }),
 
   signUp: builder.mutation<TSignUpResponse, unknown>({

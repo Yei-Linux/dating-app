@@ -7,15 +7,20 @@ import {Title} from '../../modules/ui/Title/Title';
 import {ProfileStyleSheet} from './styles';
 import {ProfileForm} from '../../modules/Profile/Profile';
 import {useFindProfileByUserIdQuery} from '../../rtk-query';
+import {useAppDispatch} from '../../store/global';
+import {authActions} from '../../store/global/auth';
 
 export type IProfileScreen = TScreenProp;
 export const Profile = ({}: IProfileScreen) => {
+  const dispath = useAppDispatch();
   const {data} = useFindProfileByUserIdQuery({userId: 1});
   if (!data) {
     return null;
   }
 
   const fullName = `${data.name} ${data.lastName}`;
+
+  const handleLogout = () => dispath(authActions.clear(null));
 
   return (
     <View style={ProfileStyleSheet.container}>
@@ -28,7 +33,7 @@ export const Profile = ({}: IProfileScreen) => {
       <View style={ProfileStyleSheet.menuContainer}>
         <ProfileForm values={data} />
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleLogout}>
           <View style={ProfileStyleSheet.menuItemContainer}>
             <Icon.Button
               color="#ad56ff"

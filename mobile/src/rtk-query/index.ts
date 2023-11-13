@@ -6,10 +6,19 @@ import {profileApi} from './profile';
 import {authApi} from './auth';
 import {countriesApi} from './countries';
 import {gendersApi} from './genders';
+import {RootState} from '../store/global';
 
 export const datingMatchApi = createApi({
   reducerPath: 'datingMatchApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'http://10.0.2.2:3001/'}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://10.0.2.2:3001/',
+    prepareHeaders: (headers, {getState}) => {
+      const token = ((getState() as RootState).auth as any).token;
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+    },
+  }),
   endpoints: builder => ({
     ...chatApi(builder),
     ...discoverApi(builder),

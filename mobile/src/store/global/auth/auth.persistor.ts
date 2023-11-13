@@ -1,10 +1,10 @@
 import {persistReducer} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import {authReducers} from './auth.slice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const authPersistConfig = {
   key: 'auth',
-  storage,
+  storage: AsyncStorage,
 };
 
 export const authPersistReducer = persistReducer(

@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {isAuthGuard} from '../../guards/isAuth.guard';
+import {isAuthGuard, isAuthGuardForSignActions} from '../../guards';
 import {RoleBasedView} from '../../modules/shared/RoleBasedView/RoleBasedView';
 import {ChatScreen} from '../Chat';
 import {Home} from '../Home';
@@ -26,8 +26,22 @@ export const Wrapper = () => {
         <Stack.Screen name="Chat" component={ChatScreen} />
         <Stack.Screen name="Profile" component={Profile} />
 
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="SignIn">
+          {() => (
+            <RoleBasedView
+              guards={[isAuthGuardForSignActions(!!isAuth)]}
+              component={SignInScreen}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="SignUp">
+          {() => (
+            <RoleBasedView
+              guards={[isAuthGuardForSignActions(!!isAuth)]}
+              component={SignUpScreen}
+            />
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

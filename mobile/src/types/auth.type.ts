@@ -1,24 +1,10 @@
-export type TPayloadToken = {
-  id: number;
-  email: string;
-  name: string;
-  lastName: string;
-  profileImg: string;
-  description: string;
-};
-
 export type TSignInRequest = {
   email: string;
   password: string;
 };
 
 export type TSignInResponse = {
-  id: number;
   email: string;
-  name: string;
-  lastName: string;
-  profileImg: string;
-  description: string;
   token: string;
 };
 

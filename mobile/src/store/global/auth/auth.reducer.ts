@@ -10,16 +10,19 @@ export const authReducer = {
     action: IAction<IAuthAction>,
   ) => {
     const {payload} = action;
-    if (!state || !payload) {
+    if (!payload) {
       return;
     }
 
-    state.id = payload.id;
-    state.email = payload.email;
-    state.name = payload.name;
-    state.lastName = payload.lastName;
-    state.age = payload.age;
-    state.token = payload.token;
-    state.profileImg = payload.profileImg;
+    (state as any).token = payload.token;
+    (state as any).user = payload.user;
+  },
+  clear: (state: WritableDraft<TAuthInitialState>, action: IAction<null>) => {
+    const {payload} = action;
+    if (!payload) {
+      return;
+    }
+
+    state = null;
   },
 };
