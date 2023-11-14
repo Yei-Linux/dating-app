@@ -17,12 +17,8 @@ export const authReducer = {
     (state as any).token = payload.token;
     (state as any).user = payload.user;
   },
-  clear: (state: WritableDraft<TAuthInitialState>, action: IAction<null>) => {
-    const {payload} = action;
-    if (!payload) {
-      return;
-    }
-
+  clear: (state: WritableDraft<TAuthInitialState>) => {
     state = null;
+    return state;
   },
 };

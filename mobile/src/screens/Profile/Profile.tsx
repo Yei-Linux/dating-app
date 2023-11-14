@@ -9,9 +9,11 @@ import {ProfileForm} from '../../modules/Profile/Profile';
 import {useFindProfileByUserIdQuery} from '../../rtk-query';
 import {useAppDispatch} from '../../store/global';
 import {authActions} from '../../store/global/auth';
+import {useNavigation} from '@react-navigation/native';
 
 export type IProfileScreen = TScreenProp;
 export const Profile = ({}: IProfileScreen) => {
+  const {navigate} = useNavigation();
   const dispath = useAppDispatch();
   const {data} = useFindProfileByUserIdQuery({userId: 1});
   if (!data) {
@@ -20,7 +22,10 @@ export const Profile = ({}: IProfileScreen) => {
 
   const fullName = `${data.name} ${data.lastName}`;
 
-  const handleLogout = () => dispath(authActions.clear(null));
+  const handleLogout = () => {
+    dispath(authActions.clear());
+    (navigate as any)('SignIn');
+  };
 
   return (
     <View style={ProfileStyleSheet.container}>
