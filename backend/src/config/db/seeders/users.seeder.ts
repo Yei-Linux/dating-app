@@ -1,4 +1,5 @@
-const PASSWORD = '123';
+const passwordHashed =
+  '$2b$10$KRutgCkNIcsqsiAQhRVBk.mUz5jkOiq7lgM7EF8CcYy98KyXYPSuS';
 
 export const usersSeeder = [
   {
@@ -13,7 +14,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 2,
     genderToMatchId: 1,
-    password: PASSWORD,
+    password: passwordHashed,
   },
   {
     id: 2,
@@ -27,7 +28,7 @@ export const usersSeeder = [
     countryId: 2,
     genderId: 2,
     genderToMatchId: 1,
-    password: PASSWORD,
+    password: passwordHashed,
   },
   {
     id: 3,
@@ -41,7 +42,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 2,
     genderToMatchId: 1,
-    password: PASSWORD,
+    password: passwordHashed,
   },
   {
     id: 4,
@@ -55,7 +56,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 1,
     genderToMatchId: 2,
-    password: PASSWORD,
+    password: passwordHashed,
   },
   {
     id: 5,
@@ -69,7 +70,7 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 1,
     genderToMatchId: 2,
-    password: PASSWORD,
+    password: passwordHashed,
   },
   {
     id: 6,
@@ -83,6 +84,6 @@ export const usersSeeder = [
     countryId: 1,
     genderId: 1,
     genderToMatchId: 2,
-    password: PASSWORD,
+    password: passwordHashed,
   },
 ];

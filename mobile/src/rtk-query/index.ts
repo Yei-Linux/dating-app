@@ -7,11 +7,12 @@ import {authApi} from './auth';
 import {countriesApi} from './countries';
 import {gendersApi} from './genders';
 import {RootState} from '../store/global';
+import {BASE_URL} from '../constants';
 
 export const datingMatchApi = createApi({
   reducerPath: 'datingMatchApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://10.0.2.2:3001/',
+    baseUrl: BASE_URL + '/',
     prepareHeaders: (headers, {getState}) => {
       const token = ((getState() as RootState).auth as any).token;
       if (token) {

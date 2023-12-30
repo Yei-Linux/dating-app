@@ -1,14 +1,14 @@
-CREATE SEQUENCE IF NOT EXISTS Gender_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS Country_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS User_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS Interactions_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS UserInteractions_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS UserDiscoverPeopleHistory_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS ChatType_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS Chat_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS PrivateChat_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS GroupChat_id_seq start 1;
-CREATE SEQUENCE IF NOT EXISTS Messages_id_seq start 1;
+CREATE SEQUENCE IF NOT EXISTS Gender_id_seq start 3;
+CREATE SEQUENCE IF NOT EXISTS Country_id_seq start 5;
+CREATE SEQUENCE IF NOT EXISTS User_id_seq start 7;
+CREATE SEQUENCE IF NOT EXISTS Interactions_id_seq start 3;
+CREATE SEQUENCE IF NOT EXISTS UserInteractions_id_seq start 2;
+CREATE SEQUENCE IF NOT EXISTS UserDiscoverPeopleHistory_id_seq start 2;
+CREATE SEQUENCE IF NOT EXISTS ChatType_id_seq start 3;
+CREATE SEQUENCE IF NOT EXISTS Chat_id_seq start 4;
+CREATE SEQUENCE IF NOT EXISTS PrivateChat_id_seq start 4;
+CREATE SEQUENCE IF NOT EXISTS GroupChat_id_seq start 2;
+CREATE SEQUENCE IF NOT EXISTS Messages_id_seq start 4;
 
 select setval('Gender_id_seq',(select max(id) from "Gender"));
 select setval('Country_id_seq',(select max(id) from "Country"));

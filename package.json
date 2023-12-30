@@ -1,0 +1,25 @@
+{
+  "name": "dating-match",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "aws:deploy-ecr": "sh ./scripts/deploy-images-to-ecr.sh",
+    "aws:create-ec2-instance": "sh ./scripts/create-ec2-instance.sh",
+    "aws:create-key": "sh ./scripts/create-key-pair.sh",
+    "front:dev": "cd mobile && npm run android",
+    "front:build": "cd mobile",
+    "back:db:init": "cd backend && npm run db:init",
+    "docker:build-back": "cd backend && docker buildx build --platform linux/amd64,linux/arm64 -t ms-dating-match ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yei-Linux/dating-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yei-Linux/dating-app/issues"
+  },
+  "homepage": "https://github.com/Yei-Linux/dating-app#readme"
+}

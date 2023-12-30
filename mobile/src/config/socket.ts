@@ -4,7 +4,7 @@ import {TMessage, TSocketMessage} from '../types';
 
 let socket: Socket<any, any>;
 export const initiateSocket = (chatId: number) => {
-  socket = io(`${BASE_URL}:3001`);
+  socket = io(`${BASE_URL}`);
   if (!socket || !chatId) {
     return;
   }

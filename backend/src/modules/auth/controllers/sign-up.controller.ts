@@ -40,6 +40,7 @@ export const signUpController = async (
     res.send(response);
   } catch (error) {
     const message = (error as Error).message;
+    console.log('test', message);
     res.status(500).send({ data: null, message });
   }
 };

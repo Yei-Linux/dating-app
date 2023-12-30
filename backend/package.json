@@ -12,7 +12,8 @@
     "prisma:migrate": "npx prisma migrate dev --name init",
     "prisma:seed": "npx prisma db seed",
     "test": "jest",
-    "dev": "npm run prisma:migrate && npm run prisma:seed && npx ts-node-dev --respawn --transpile-only ./src/app.ts"
+    "db:init": "npm run prisma:migrate && npm run prisma:seed",
+    "dev": "npx ts-node-dev --respawn --transpile-only ./src/app.ts"
   },
   "author": "Yei-Linux",
   "license": "ISC",
