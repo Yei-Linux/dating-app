@@ -91,7 +91,7 @@ aws ecr-public get-login-password --profile jesus --region us-east-1 | docker lo
 ```console
  /usr/libexec/java_home
  cd /Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
- sudo keytool -genkey -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 1000
+ sudo keytool -genkey -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 36500
 
  Add the following options in gradle.properties:
   MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
@@ -113,4 +113,9 @@ aws ecr-public get-login-password --profile jesus --region us-east-1 | docker lo
 
   npm i react-native-version -global 
   react-native-version --never-amend
+
+  go to https://www.appicon.co/ and generate your icon app
+  go to android studio and select image asset to generate launcher foreground and round
+
+  go to android and run: ./gradlew bundleRelease
 ```
