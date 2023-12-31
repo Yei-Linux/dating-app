@@ -92,4 +92,25 @@ aws ecr-public get-login-password --profile jesus --region us-east-1 | docker lo
  /usr/libexec/java_home
  cd /Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
  sudo keytool -genkey -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 1000
+
+ Add the following options in gradle.properties:
+  MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+  MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+  MYAPP_UPLOAD_STORE_PASSWORD=*******
+  MYAPP_UPLOAD_KEY_PASSWORD=*******
+ In settings android/build.gradle set in signingConfigs:
+        release {
+            if(project.hasProperty("MYAPP_UPLOAD_STORE_FILE")) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_STORE_PASSWORD
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
+
+  npm i react-native-rename -global 
+  npx react-native-rename "dating app" -b com.jesusalvan.datingapp
+
+  npm i react-native-version -global 
+  react-native-version --never-amend
 ```

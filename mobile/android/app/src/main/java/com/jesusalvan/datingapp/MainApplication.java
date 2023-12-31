@@ -1,4 +1,4 @@
-package com.datingapp;
+package com.jesusalvan.datingapp;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
