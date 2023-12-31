@@ -81,3 +81,15 @@ aws ecr-public get-login-password --profile jesus --region us-east-1 | docker lo
 # RDS
 
 - Password: datingapp123
+
+# KeyStore password
+
+- Password: datingapp123
+
+# Deploy to PlayStore
+
+```console
+ /usr/libexec/java_home
+ cd /Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
+ sudo keytool -genkey -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 1000
+```
